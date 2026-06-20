@@ -7,7 +7,9 @@
     "test": "test"
   },
   "scripts": {
-  "test": "npx jest"
+  "test": "npx jest",
+  "test:report": "npx jest --coverage --coverageReporters=lcov --coverageReporters=text"
+
   },
   "keywords": [],
   "author": "",
