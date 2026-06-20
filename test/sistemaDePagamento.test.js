@@ -32,4 +32,13 @@ describe("Sistema de Pagamentos", () => {
     expect(resultado[0].status).toBe("PENDENTE");
   });
 
+  
+  test("Deve listar pagamentos por cliente", () => {
+    const sistema = new SistemaPagamento();
+    const resultado = sistema.listarPorCliente("João");
+
+    expect(resultado.length).toBe(2);
+    expect(resultado[0].cliente).toBe("João");
+});
+
 });
