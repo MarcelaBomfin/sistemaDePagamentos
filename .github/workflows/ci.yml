@@ -1,41 +1,27 @@
+name: CI - Sistema de Pagamentos
 
-name: CI Pipeline
-
-# Gatilhos
 on:
   push:
-    branches: [ "main" ]   # Execução por push
-  workflow_dispatch:       # Execução manual
-  schedule:                # Execução agendada
-    - cron: "0 3 * * *"    # Todo dia às 03:00 UTC
+    branches: ["main"]
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Baixar o código
-      - name: Checkout do código
+      - name: Baixar código
         uses: actions/checkout@v4
 
-      # 2. Configurar ambiente (Node exemplo)
-      - name: Configurar Node.js
+      - name: Configurar Node
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: 18
 
-      # 3. Instalar dependências
       - name: Instalar dependências
-        run: npm install
+        run: npm ci
 
-      # 4. Rodar testes + gerar relatório
-      - name: Executar testes
-        run: |
-          npm test -- --coverage
+      - name: Dar permissão ao Jest
+        run: chmod +x node_modules/.bin/jest
 
-      # 5. Salvar relatório como artefato
-      - name: Publicar relatório
-        uses: actions/upload-artifact@v4
-        with:
-          name: relatorio-testes
-          path: coverage/
+      - name: Rodar testes
+        run: npm test
